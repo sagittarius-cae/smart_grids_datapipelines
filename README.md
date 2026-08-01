@@ -26,8 +26,14 @@ Lista de las tecnologías, herramientas y librerías clave utilizadas en el proy
 Para insertar imágenes en tu documentación, guarda los archivos visuales en una carpeta llamada `docs/` o `images/` dentro de tu repositorio y enlázalos así:
 
 ### Data diagrams
-![Entity Relationship](smart_grid_erd.png)
-*Descripción corta del flujo: Los archivos CSV ingresan a MinIO y son transformados por el clúster local de PySpark.*
+![Entity Relationship](docs/smart_grid_erd.png)
+*Description: Entity relationship diagram among all entities for the smartgrids*
+
+![Star Schema](docs/smart_grid_star_schema.png)
+*Description: Smart Grids Star schema useful to optimize queries and facilitate data analysis*
+
+![Smart Grids Modules](docs/smart_grid_star_modules.png)
+*Description: Organize the smart grids components under business domains*
 
 ### Consola de MinIO con Datos Cargados
 ![Interfaz de MinIO](docs/screenshot-minio.png)
