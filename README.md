@@ -5,35 +5,39 @@
 ---
 
 ## 🎯 Objetivo
-Explica aquí el propósito principal de tu desarrollo. Qué problema resuelve, a quién ayuda y cuál es el resultado final esperado.
 
 * **Main goal:** Ingest smart grids and smart meters raw data from many csv files according to the industry to enabler semantic data.
 * **Key benefit:** Allows local simulations about data pipelines under the Medallion Architecture. These data will be used for further data analysis and Feature Engineering.
 
 ---
 
-## 🛠️ Stack Tecnológico
-Lista de las tecnologías, herramientas y librerías clave utilizadas en el proyecto:
+## 🛠️ Technology Stack
+ List of components, tools, languages:
 
-* **Language:** ![Python](https://shields.io)
-* **Data processing:** ![PySpark](https://shields.io)
-* **Object storage:** ![MinIO](https://shields.io)
-* **Containers:** ![Docker](https://shields.io)
+* **Language:** [Python](python.og)
+* **Data processing:** [PySpark](https://spark.apache.org/docs/latest/api/python/index.html)
+* **Object storage:** [MinIO]](https://www.min.io/))
+* **Containers:** [Docker](https://shields.io](https://docs.docker.com/compose/)
 
 ---
 
-## 📸 Capturas de Pantalla / Arquitectura
-Para insertar imágenes en tu documentación, guarda los archivos visuales en una carpeta llamada `docs/` o `images/` dentro de tu repositorio y enlázalos así:
+## 📸 Architecture Diagrams / Schemas
 
-### Data diagrams
-![Entity Relationship](docs/smart_grid_erd.png)
+![Smart Grids Modules](docs/smart_grid_modules.png)
+*Description: Organize the smart grids components under business domains*
+
+
+---
+
+![Entity Relationship](/docs/smart_grid_erd.png)
 *Description: Entity relationship diagram among all entities for the smartgrids*
+
+---
 
 ![Star Schema](docs/smart_grid_star_schema.png)
 *Description: Smart Grids Star schema useful to optimize queries and facilitate data analysis*
 
-![Smart Grids Modules](docs/smart_grid_star_modules.png)
-*Description: Organize the smart grids components under business domains*
 
-### Consola de MinIO con Datos Cargados
-![Interfaz de MinIO](docs/screenshot-minio.png)
+
+### Jupyter Notebooks
+![Notebooks console](http://localhost:8888/lab/workspaces/auto-4/tree/notebooks/)
