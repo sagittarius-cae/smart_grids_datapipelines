@@ -1,10 +1,10 @@
 # 📊 SmartGrids Datapiple platform
 
-> Breve descripción de una sola frase que resuma lo que hace tu proyecto (ej. "Pipeline ETL para el procesamiento y análisis de datos CSV utilizando PySpark y almacenamiento MinIO local").
+> ETL data pipelines for Smart Grids and Smart Meters on local Medallion platform to provision information for data analysis and Feature Engineering.
 
 ---
 
-## 🎯 Objetivo
+## 🎯 Goal
 
 * **Main goal:** Ingest smart grids and smart meters raw data from many csv files according to the industry to enabler semantic data.
 * **Key benefit:** Allows local simulations about data pipelines under the Medallion Architecture. These data will be used for further data analysis and Feature Engineering.
@@ -16,28 +16,29 @@
 
 * **Language:** [Python](python.og)
 * **Data processing:** [PySpark](https://spark.apache.org/docs/latest/api/python/index.html)
-* **Object storage:** [MinIO]](https://www.min.io/))
-* **Containers:** [Docker](https://shields.io](https://docs.docker.com/compose/)
+* **Object storage:** [MinIO](https://www.min.io/)
+* **Containers:** [Docker]](https://docs.docker.com/compose/)
 
 ---
 
 ## 📸 Architecture Diagrams / Schemas
 
+> * Smart Grids Modules: Organize the smart grids components under business domains
 ![Smart Grids Modules](docs/smart_grid_modules.png)
-*Description: Organize the smart grids components under business domains*
-
 
 ---
 
+
+> * Entity Relationship:  Shows relations among all entities for the smartgrids
 ![Entity Relationship](/docs/smart_grid_erd.png)
-*Description: Entity relationship diagram among all entities for the smartgrids*
 
 ---
 
+> * Smart Grids Star schema useful to optimize queries and facilitate data analysis*
 ![Star Schema](docs/smart_grid_star_schema.png)
-*Description: Smart Grids Star schema useful to optimize queries and facilitate data analysis*
+
 
 
 
 ### Jupyter Notebooks
-![Notebooks console](http://localhost:8888/lab/workspaces/auto-4/tree/notebooks/)
+[Notebooks console](http://localhost:8888/lab/workspaces/auto-4/tree/notebooks/)
