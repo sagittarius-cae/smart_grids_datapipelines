@@ -1,19 +1,48 @@
 version: '3.8'
 
 services:
+  # Tu contenedor de desarrollo e ingeniería de datos con soporte Spark/dbt
   de-platform:
     build: .
-    container_name: de-local-plastform
+    container_name: de-local-platform
     volumes:
-      # Maps local folders to the container's working directory
       - ./notebooks:/app/notebooks
       - ./dbt_project:/app/dbt_config
-      - ./data_lakehouse:/app/data_lakehouse  # <-- Mounts data separately
+      - ~/projects/data_lakehouse/smart_grids:/app/data_lakehouse
     ports:
-      - "8888:8888"
-      - "4040:4040"
+      - "8888:8888"  # Interfaz de JupyterLab
+      - "4040:4040"  # Interfaz de Monitoreo de Apache Spark UI
     networks:
       - de-network
+    depends_on:
+      minio:
+        condition: service_healthy
+
+  # Servicio de MinIO (Tu Amazon S3 Local en la Laptop)
+  minio:
+    image: minio/minio:latest
+    container_name: local-s3-minio
+    ports:
+      - "9000:9000"  # Puerto para la API de S3
+      - "9001:9001"  # Puerto para la Consola Web
+    volumes:
+      - minio_data:/data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpassword
+    # AJUSTE CLAVE: Aseguramos que el servidor use exactamente la ruta /data
+    command: server /data --console-address ":9001"
+    restart: always
+    networks:
+      - de-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  minio_data:
 
 networks:
   de-network:

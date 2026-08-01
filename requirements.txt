@@ -3,8 +3,9 @@ numpy
 matplotlib
 seaborn
 pyspark>=3.5.0,<3.6.0
-pyiceberg
-duckdb
-duckdb-engine
-dbt-duckdb
+pyiceberg[pyarrow,s3fs,sql-sqlite]
+boto3
 jupyterlab
+minio
+dbt-core
+dbt-spark[session]

@@ -1,0 +1,18 @@
+smart_grids_project:
+  target: dev
+  outputs:
+    dev:
+      type: spark
+      method: session
+      schema: gold_semantic_layer
+      # Configuramos la sesión de Spark interna de dbt para que reconozca MinIO
+      spark_configs:
+        spark.jars.packages: "org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262"
+        spark.hadoop.fs.s3a.endpoint: "http://minio:9000"
+        spark.hadoop.fs.s3a.access.key: "minioadmin"
+        spark.hadoop.fs.s3a.secret.key: "minioadminpassword"
+        spark.hadoop.fs.s3a.path.style.access: "true"
+        spark.hadoop.fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
+        spark.hadoop.fs.s3a.connection.ssl.enabled: "false"
+        # Aquí defines dónde se guardarán físicamente las tablas Gold en tu S3 local
+        spark.sql.warehouse.dir: "s3a://gold/smart_grids/warehouse/"
