@@ -17,7 +17,7 @@
 * **Language:** [Python](python.og)
 * **Data processing:** [PySpark](https://spark.apache.org/docs/latest/api/python/index.html)
 * **Object storage:** [MinIO](https://www.min.io/)
-* **Containers:** [Docker]](https://docs.docker.com/compose/)
+* **Containers:** [Docker](https://docs.docker.com/compose/)
 
 ---
 
