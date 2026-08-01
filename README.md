@@ -37,8 +37,18 @@
 > * Smart Grids Star schema useful to optimize queries and facilitate data analysis*
 ![Star Schema](docs/smart_grid_star_schema.png)
 
+---
 
+### Data Catalog
+[Reference](./docs/data_catalog.md)
 
+---
 
+### MinIO UI
+> * Local MinIO implemented to simulate a S3 Objects Storage
+![Smart Grids Objects Storage](docs/MinIO_local.png)
+
+---
 ### Jupyter Notebooks
+> * Jupyter notebooks to experimentation
 [Notebooks console](http://localhost:8888/lab/workspaces/auto-4/tree/notebooks/)
