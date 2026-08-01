@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  de-platform:
+    build: .
+    container_name: de-local-plastform
+    volumes:
+      # Maps local folders to the container's working directory
+      - ./notebooks:/app/notebooks
+      - ./dbt_project:/app/dbt_config
+      - ./data_lakehouse:/app/data_lakehouse  # <-- Mounts data separately
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    networks:
+      - de-network
+
+networks:
+  de-network:
+    driver: bridge
