@@ -1,4 +1,4 @@
-# 📊 SmartGrids Datapiple platform
+# 📊 SmartGrids Data pipeline platform
 
 > ETL data pipelines for Smart Grids and Smart Meters on local Medallion platform to provision information for data analysis and Feature Engineering.
 
