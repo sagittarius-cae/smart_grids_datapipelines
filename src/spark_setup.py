@@ -1,47 +1,41 @@
-from pyspark.sql import SparkSession
-from functools import lru_cache
 import yaml
+from functools import lru_cache
+from pyspark.sql import SparkSession
 
-#decorate to cache the spark session
 @lru_cache(maxsize=1)
 def get_spark_session(config_path: str = "spark_config.yml") -> SparkSession:
-    # 1. Read YAML file.
+    """
+    Lee la configuración desde un archivo YAML y construye una sesión de PySpark
+    optimizada para Apache Iceberg y conectividad global con MinIO.
+    """
+    # 1. Leer el archivo YAML
     with open(config_path, "r") as f:
         cfg = yaml.safe_load(f)["spark"]
 
-    # 2. Intialize the constructor based on fixed parameters from YAML file.
+    # 2. Inicializar el constructor con parámetros estructurales básicos
     builder = SparkSession.builder \
         .appName(cfg["app_name"]) \
         .config("spark.jars.packages", cfg["jars"]["packages"]) \
         .config("spark.sql.extensions", cfg["sql"]["extensions"]) \
         .config("spark.ui.enabled", cfg["ui_enabled"])
 
-    # 3. Dynamic mapping all sub properties from 'local' catalog defined in YAML file.
-    # This injects dynamically class, type, warehouse, s3_endpoint, s3_endpoint, s3_access_key_id, etc.
-    catalog_props = cfg["catalog"]["local"]
-    for key, val in catalog_props.items():
-        # Replace underlines from YAML file to dots so the spark syntax (ej: s3_endpoint -> s3.endpoint)
-        spark_key = f"spark.sql.catalog.local.{key.replace('_', '.')}"
+    # 3. Mapear dinámicamente las credenciales globales de Hadoop (fs.s3a) desde el YAML
+    # Esto elimina el hardcoding y mapea directamente propiedades con puntos (.)
+    hadoop_props = cfg.get("hadoop", {})
+    for key, val in hadoop_props.items():
+        # Como en el YAML ya usamos puntos (fs.s3a.endpoint), lo inyectamos directamente
+        spark_key = f"spark.hadoop.{key}"
         builder = builder.config(spark_key, str(val))
 
-    # 4. Inject file system credentials hadoop's global.(fs.s3a) 
-    # This is MANDATORY so that Spark's native commands as spark.read.csv("s3a://...") works on Bronze
-    builder = builder \
-        .config("spark.hadoop.fs.s3a.endpoint", "http://minio:9000") \
-        .config("spark.hadoop.fs.s3a.access.key", "minioadmin") \
-        .config("spark.hadoop.fs.s3a.secret.key", "minioadminpassword") \
-        .config("spark.hadoop.fs.s3a.path.style.access", "true") \
-        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-        .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
-
-    # 5. Create Active Session.
+    # 4. Crear la sesión activa de PySpark
     spark_session = builder.getOrCreate()
     
-    # 6. Post-configurations of  console cleansing.
+    # 5. Configuraciones de limpieza de consola posteriores a la creación
     spark_session.sparkContext.setLogLevel("ERROR")
-    spark_session.sql("USE local")
     
-    #clear_output()
-    print("¡Spark's session is connected succesfully to Apache Iceberg and MinIO (S3 Local)!")
+    # Nota de Arquitectura: Eliminamos el 'USE local' ya que los catálogos e inicializaciones 
+    # de Iceberg ahora se manejan bajo demanda de forma dinámica en tu Utility de persistencia.
+    
+    print("🚀 ¡Sesión de PySpark inicializada correctamente con soporte Hadoop AWS (MinIO)!")
     
     return spark_session

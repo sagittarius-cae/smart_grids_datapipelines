@@ -2,20 +2,15 @@ spark:
   app_name: "EnergyLakehousePipeline"
   ui_enabled: "false"
   jars:
-    # Agregamos los JARs de AWS Hadoop indispensables para comunicarse con MinIO (S3)
     packages: "org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.5.2,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262"
   sql:
     extensions: "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions"
-  catalog:
-    local:
-      class: "org.apache.iceberg.spark.SparkCatalog"
-      type: "hadoop"
-      # Apuntamos el Warehouse de Apache Iceberg directamente al bucket de Silver en MinIO
-      warehouse: "s3a://silver/smart_grids/iceberg_warehouse"
-      
-      # --- NUEVA CONFIGURACIÓN DE CONEXIÓN DE RED A S3/MINIO ---
-      io_impl: "org.apache.iceberg.aws.s3.S3FileIO"
-      s3_endpoint: "http://minio:9000"
-      s3_access_key_id: "minioadmin"
-      s3_secret_access_key: "minioadminpassword"
-      s3_path_style_access: "true"
+  
+  # --- NETWORKS GLOBAL CREDENTIALS FOR MINIO ---
+  hadoop:
+    fs.s3a.endpoint: "http://minio:9000"
+    fs.s3a.access.key: "minioadmin"
+    fs.s3a.secret.key: "minioadminpassword"
+    fs.s3a.path.style.access: "true"
+    fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
+    fs.s3a.connection.ssl.enabled: "false"
