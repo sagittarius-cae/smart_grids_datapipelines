@@ -1,6 +1,6 @@
 from pyspark.sql import DataFrame, SparkSession
 
-class DataLakeIO:
+class DataIO:
     def __init__(self, spark_session: SparkSession) -> None:
          self.spark = spark_session
 
